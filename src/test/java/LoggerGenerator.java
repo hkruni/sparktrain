@@ -1,7 +1,7 @@
 import org.apache.log4j.Logger;
 
 /**
- * 模拟日志产生
+ * 模拟日志产生 11.3
  */
 public class LoggerGenerator {
 

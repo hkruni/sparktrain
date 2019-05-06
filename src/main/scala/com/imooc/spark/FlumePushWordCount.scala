@@ -6,6 +6,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /**
   * Spark Streaming整合Flume的第一种方式
+  * 9.4
   */
 object FlumePushWordCount {
 
@@ -24,9 +25,9 @@ object FlumePushWordCount {
     //TODO... 如何使用SparkStreaming整合Flume
     val flumeStream = FlumeUtils.createStream(ssc, hostname, port.toInt)
 
-    flumeStream.map(x=> new String(x.event.getBody.array()).trim)
+    flumeStream.map(x=> new String(x.event.getBody.array()).trim)//字节数组转换为字符串
       .flatMap(_.split(" "))//拆分成单词
-      .map((_,1)).reduceByKey(_+_).print()
+      .map((_,1)).reduceByKey(_+_).print()//每个单词赋值1然后累加
 
     ssc.start()
     ssc.awaitTermination()

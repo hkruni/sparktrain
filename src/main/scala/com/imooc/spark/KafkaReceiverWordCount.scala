@@ -6,9 +6,18 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /**
   * Spark Streaming对接Kafka的方式一
+  * 10.5
   */
 object KafkaReceiverWordCount {
 
+  /**
+    *
+    * @param args
+    *  zkQuorum:zookeeper地址
+    *  group:消费者组
+    *  topics:消息主题
+    *  numThreads:
+    */
   def main(args: Array[String]): Unit = {
 
     if(args.length != 4) {
@@ -25,7 +34,7 @@ object KafkaReceiverWordCount {
     val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
 
     // TODO... Spark Streaming如何对接Kafka
-    val messages = KafkaUtils.createStream(ssc, zkQuorum, group,topicMap)
+    val messages = KafkaUtils.createStream(ssc,zkQuorum,group,topicMap)
 
     // TODO... 自己去测试为什么要取第二个
     messages.map(_._2).flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).print()
